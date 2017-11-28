@@ -8,15 +8,15 @@ class Vector {
 
     plus (vectorObj) {
         try {
-            if (vectorObj instanceof Vector) {
+            if (!vectorObj instanceof Vector) {
                 throw 'Можно прибавлять к вектору только вектор типа Vector';
             } 
         } catch (e) {
             console.log(e);
         }
-        let vector = new Vector();
-        vector.x += this.x;
-        vector.y += this.y;
+        
+        let vector = new Vector(this.x + vectorObj.x, this.y + vectorObj.y);
+        // console.log(vector);
         return vector;
     }
 
@@ -26,9 +26,16 @@ class Vector {
     }
 }
 
+class Actor {
+    constructor() {
+        const position = new Vector(pos);
+        
 
+    }
+    act () {
 
-
+    }
+}
 
 // const grid = [
 //   new Array(3),
