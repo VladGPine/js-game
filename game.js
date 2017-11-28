@@ -7,7 +7,18 @@ class Vector {
     }
 
     plus (vectorObj) {
+<<<<<<< HEAD
         if (!(vectorObj instanceof Vector)) throw new Error('Можно прибавлять к вектору только вектор типа Vector'); 
+=======
+        try {
+            if (!vectorObj instanceof Vector) {
+                throw 'Можно прибавлять к вектору только вектор типа Vector';
+            } 
+        } catch (e) {
+            console.log(e);
+        }
+        
+>>>>>>> 571a7dfa0d77713df924a1103adf58f681794ed2
         let vector = new Vector(this.x + vectorObj.x, this.y + vectorObj.y);
         // console.log(vector);
         return vector;
