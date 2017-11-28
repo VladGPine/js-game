@@ -7,18 +7,7 @@ class Vector {
     }
 
     plus (vectorObj) {
-<<<<<<< HEAD
         if (!(vectorObj instanceof Vector)) throw new Error('Можно прибавлять к вектору только вектор типа Vector'); 
-=======
-        try {
-            if (!vectorObj instanceof Vector) {
-                throw 'Можно прибавлять к вектору только вектор типа Vector';
-            } 
-        } catch (e) {
-            console.log(e);
-        }
-        
->>>>>>> 571a7dfa0d77713df924a1103adf58f681794ed2
         let vector = new Vector(this.x + vectorObj.x, this.y + vectorObj.y);
         // console.log(vector);
         return vector;
@@ -31,117 +20,22 @@ class Vector {
 }
 
 class Actor {
-    constructor() {
-        const position = new Vector(pos);
-        
-
+    constructor(pos = new Vector(0, 0), size = new Vector(1, 1), speed = new Vector(0, 0)) {
+        if (!(pos instanceof Vector)) throw new Error('Неопределенный тип, отличный от объекта типа Vector');
+        if (!(size instanceof Vector)) throw new Error('Неопределенный тип, отличный от объекта типа Vector');
+        if (!(speed instanceof Vector)) throw new Error('Неопределенный тип, отличный от объекта типа Vector');
+        this.pos = pos;
+        this.size = size;
+        this.speed = speed;
+        Object.defineProperty(this, 'type', {
+            value: 'actor',
+            writable: false,
+            configurable: false,
+            enumerable: true
+        });
     }
+
     act () {
 
     }
 }
-
-// const grid = [
-//   new Array(3),
-//   ['wall', 'wall', 'lava']
-// ];
-// const level = new Level(grid);
-// runLevel(level, DOMDisplay);
-
-// const schema = [
-//   '         ',
-//   '         ',
-//   '         ',
-//   '         ',
-//   '     !xxx',
-//   '         ',
-//   'xxx!     ',
-//   '         '
-// ];
-// const parser = new LevelParser();
-// const level = parser.parse(schema);
-// runLevel(level, DOMDisplay);
-
-// const schema = [
-//   '         ',
-//   '         ',
-//   '         ',
-//   '         ',
-//   '     !xxx',
-//   ' @       ',
-//   'xxx!     ',
-//   '         '
-// ];
-// const actorDict = {
-//   '@': Player
-// }
-// const parser = new LevelParser(actorDict);
-// const level = parser.parse(schema);
-// runLevel(level, DOMDisplay);
-
-// const schema = [
-//   '         ',
-//   '         ',
-//   '    =    ',
-//   '         ',
-//   '     !xxx',
-//   ' @       ',
-//   'xxx!     ',
-//   '         '
-// ];
-// const actorDict = {
-//   '@': Player,
-//   '=': HorizontalFireball
-// }
-// const parser = new LevelParser(actorDict);
-// const level = parser.parse(schema);
-// DOMDisplay(document.body, level);
-
-// const schema = [
-//   '         ',
-//   '         ',
-//   '    =    ',
-//   '       o ',
-//   '     !xxx',
-//   ' @       ',
-//   'xxx!     ',
-//   '         '
-// ];
-// const actorDict = {
-//   '@': Player,
-//   '=': HorizontalFireball
-// }
-// const parser = new LevelParser(actorDict);
-// const level = parser.parse(schema);
-// runLevel(level, DOMDisplay)
-//   .then(status => console.log(`Игрок ${status}`));
-
-// const schemas = [
-//   [
-//     '         ',
-//     '         ',
-//     '    =    ',
-//     '       o ',
-//     '     !xxx',
-//     ' @       ',
-//     'xxx!     ',
-//     '         '
-//   ],
-//   [
-//     '      v  ',
-//     '    v    ',
-//     '  v      ',
-//     '        o',
-//     '        x',
-//     '@   x    ',
-//     'x        ',
-//     '         '
-//   ]
-// ];
-// const actorDict = {
-//   '@': Player,
-//   'v': FireRain
-// }
-// const parser = new LevelParser(actorDict);
-// runGame(schemas, parser, DOMDisplay)
-//   .then(() => console.log('Вы выиграли приз!'));
