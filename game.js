@@ -85,7 +85,7 @@ class Level {
 			enumerable: true
 		});
 
-		if (grid) this.height = grid.length;
+		if (this.grid) this.height = grid.length;
 
 		Object.defineProperty(this, 'width', {
 			value: 0,
@@ -93,10 +93,11 @@ class Level {
 			configurable: true,
 			enumerable: true
 		});
-
-		for (let i of grid) {
-			if (i.length > 0) this.width = i.length;
+		var max = 0;
+		for (let i of this.grid) {
+			if (i.length > max) max = i.length;
 		}
+		this.width = max;
 		
 		Object.defineProperty(this, 'status', {
 			value: null,
