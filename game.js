@@ -58,19 +58,55 @@ class Actor {
 		});
 	}
 
-	isIntersect(movingObj = new Actor()) {
+	isIntersect(movingObj) {
 		if (!(movingObj instanceof Actor)) throw new Error('Неопределенный тип, отличный от объекта типа Actor');
 		if (movingObj === this) return false;
-		if (movingObj.left >= this.left || movingObj.left >= this.right) return false;
-		if (movingObj.right <= this.right || movingObj.right <= this.left) return false;
-		if (movingObj.top >= this.top || movingObj.top >= this.bottom) return false;
-		if (movingObj.bottom <= this.bottom || movingObj.bottom <= this.top) return false;
-		// if (movingObj.left >= this.left || movingObj.right <= this.right || movingObj.top >= this.top || movingObj.bottom <= this.bottom) return false;
+		if (movingObj.left >= this.right || movingObj.right <= this.left || movingObj.top >= this.bottom || movingObj.bottom <= this.top) return false;
+
 		return true;
 	}
 
 	act() {
 
 	}
+}
 
+class Level {
+	constructor(grid, actors) {
+		this.grid = grid;
+		this.actors = actors;
+		this.player = {
+			type: 'player'
+		};
+		Object.defineProperty(this, 'height', {
+			value: 0
+		});
+		Object.defineProperty(this, 'width', {
+			value: 0
+		});
+		Object.defineProperty(this, 'status', {
+			value: null,
+			writable: true,
+			configurable: true,
+			enumerable: true
+		});
+		Object.defineProperty(this, 'finishDelay', {
+			value: 1,
+			writable: true,
+			configurable: true,
+			enumerable: true
+		});
+	}
+
+	isFinished() {
+		if ((this.status != null) && (this.finishDelay < 0)) return true;
+		return false;
+	}
+
+	actorAt(movingObj) {
+		if ((!(movingObj instanceof Actor)) || (movingObj === undefined)) throw new Error('Неопределенный тип, отличный от объекта типа Actor');
+		if (movingObj === this) return undefined;
+		
+
+	}
 }
