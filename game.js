@@ -79,11 +79,25 @@ class Level {
 			type: 'player'
 		};
 		Object.defineProperty(this, 'height', {
-			value: 0
+			value: 0,
+			writable: true,
+			configurable: true,
+			enumerable: true
 		});
+
+		if (grid) this.height = grid.length;
+
 		Object.defineProperty(this, 'width', {
-			value: 0
+			value: 0,
+			writable: true,
+			configurable: true,
+			enumerable: true
 		});
+
+		for (let i of grid) {
+			if (i.length > 0) this.width = i.length;
+		}
+		
 		Object.defineProperty(this, 'status', {
 			value: null,
 			writable: true,
@@ -105,8 +119,10 @@ class Level {
 
 	actorAt(movingObj) {
 		if ((!(movingObj instanceof Actor)) || (movingObj === undefined)) throw new Error('Неопределенный тип, отличный от объекта типа Actor');
-		if (movingObj === this) return undefined;
-		
-
+		if ((movingObj === this) || (movingObj === 0)) return undefined;
+		for (let obj of this.actors) {
+			if (obj.isIntersect(movingObj)) return obj;
+		}
+		return undefined;
 	}
 }
