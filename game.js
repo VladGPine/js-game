@@ -75,9 +75,7 @@ class Level {
 	constructor(grid, actors) {
 		this.grid = grid;
 		this.actors = actors;
-		this.player = {
-			type: 'player'
-		};
+
 		Object.defineProperty(this, 'height', {
 			value: 0,
 			writable: true,
@@ -85,19 +83,19 @@ class Level {
 			enumerable: true
 		});
 
-		if (this.grid) this.height = grid.length;
-
 		Object.defineProperty(this, 'width', {
 			value: 0,
 			writable: true,
 			configurable: true,
 			enumerable: true
 		});
-		var max = 0;
-		for (let i of this.grid) {
-			if (i.length > max) max = i.length;
-		}
-		this.width = max;
+
+		if (Array.isArray(this.grid)) {
+			this.height = this.grid.length;
+				for (let i of this.grid) {
+					if (Array.isArray(i)) this.width = i.length;
+				};
+		};
 		
 		Object.defineProperty(this, 'status', {
 			value: null,
@@ -111,10 +109,14 @@ class Level {
 			configurable: true,
 			enumerable: true
 		});
+		// for (let i of this.actors) {
+		// 	if (i instanceof Actor) this.player ;
+		//
+		// };
 	}
 
 	isFinished() {
-		if ((this.status != null) && (this.finishDelay < 0)) return true;
+		if ((this.status !== null) && (this.finishDelay < 0)) return true;
 		return false;
 	}
 
