@@ -52,7 +52,7 @@ class Actor {
 		});
 		Object.defineProperty(this, 'type', {
 			value: 'actor',
-			writable: true,
+			writable: false,
 			configurable: true,
 			enumerable: true
 		});
@@ -109,47 +109,23 @@ class Level {
 			configurable: true,
 			enumerable: true
 		});
-		this.player = player;
-		Object.defineProperty(this.player, 'type', {
-			value: 'player',
-			writable: true,
-			configurable: true,
-			enumerable: true
-		});
-		// Object.defineProperty(this, 'player', {
-		// 	value: Object.defineProperty(this, 'type', {
-		// 		value: 'player',
-		// 		writable: true,
-		// 		configurable: true,
-		// 		enumerable: true
-		// 	}),
-		// 	writable: true,
-		// 	configurable: true,
-		// 	enumerable: true
-		// });
-		// if (Array.isArray(this.actors)) {
-		// 	for (let player of this.actors) {
-		// 		this.player = player;
-		// 		// this.player.type = 'player';
-		// 	};
-			// this.player.type = 'player';
-		};
-		// Object.defineProperty(this.player, 'type', {
-		// 	value: 'player',
-		// 	writable: true,
-		// 	configurable: true,
-		// 	enumerable: true
-		// });
+		if (Array.isArray(this.actors))
+			for (let player of this.actors) {
+					if (player.type === 'actor') {
+						this.player = player;
+						break;
+					}
+			}
+		this.arg = arguments.length;
 	}
 
 	isFinished() {
-		if ((this.status !== null) && (this.finishDelay < 0)) return true;
-		return false;
+		return (this.status !== null) && (this.finishDelay < 0);
 	}
 
 	actorAt(movingObj) {
-		if ((!(movingObj instanceof Actor)) || (movingObj === undefined)) throw new Error('Неопределенный тип, отличный от объекта типа Actor');
-		if ((movingObj === this) || (movingObj === 0)) return undefined;
+		if ((!(movingObj instanceof Actor))) throw new Error('Неопределенный тип, отличный от объекта типа Actor');
+		if (movingObj === this || this.arg === 0) return undefined;
 		for (let obj of this.actors) {
 			if (obj.isIntersect(movingObj)) return obj;
 		}
