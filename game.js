@@ -110,8 +110,13 @@ class Level {
 			enumerable: true
 		});
 		// for (let i of this.actors) {
-		// 	if (i instanceof Actor) this.player ;
-		//
+		// 	if (i instanceof Actor) this.player = i;
+		//  Object.defineProperty(this.player, 'type', {
+		// 	 value: 'player',
+		// 	 writable: true,
+		// 	 configurable: true,
+		// 	 enumerable: true
+		//  });
 		// };
 	}
 
