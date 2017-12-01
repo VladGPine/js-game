@@ -96,7 +96,7 @@ class Level {
 					if (Array.isArray(i)) this.width = i.length;
 				};
 		};
-		
+
 		Object.defineProperty(this, 'status', {
 			value: null,
 			writable: true,
@@ -109,15 +109,30 @@ class Level {
 			configurable: true,
 			enumerable: true
 		});
-		// for (let i of this.actors) {
-		// 	if (i instanceof Actor) this.player = i;
-		//  Object.defineProperty(this.player, 'type', {
-		// 	 value: 'player',
-		// 	 writable: true,
-		// 	 configurable: true,
-		// 	 enumerable: true
-		//  });
-		// };
+		// Object.defineProperty(this, 'player', {
+		// 	value: Object.defineProperty(this, 'type', {
+		// 		value: 'player',
+		// 		writable: true,
+		// 		configurable: true,
+		// 		enumerable: true
+		// 	}),
+		// 	writable: true,
+		// 	configurable: true,
+		// 	enumerable: true
+		// });
+		// if (Array.isArray(this.actors)) {
+		// 	for (let player of this.actors) {
+		// 		this.player = player;
+		// 		// this.player.type = 'player';
+		// 	};
+			// this.player.type = 'player';
+		};
+		// Object.defineProperty(this.player, 'type', {
+		// 	value: 'player',
+		// 	writable: true,
+		// 	configurable: true,
+		// 	enumerable: true
+		// });
 	}
 
 	isFinished() {
