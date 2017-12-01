@@ -52,8 +52,8 @@ class Actor {
 		});
 		Object.defineProperty(this, 'type', {
 			value: 'actor',
-			writable: false,
-			configurable: false,
+			writable: true,
+			configurable: true,
 			enumerable: true
 		});
 	}
@@ -94,8 +94,8 @@ class Level {
 			this.height = this.grid.length;
 				for (let i of this.grid) {
 					if (Array.isArray(i)) this.width = i.length;
-				};
-		};
+				}
+		}
 
 		Object.defineProperty(this, 'status', {
 			value: null,
@@ -105,6 +105,13 @@ class Level {
 		});
 		Object.defineProperty(this, 'finishDelay', {
 			value: 1,
+			writable: true,
+			configurable: true,
+			enumerable: true
+		});
+		this.player = player;
+		Object.defineProperty(this.player, 'type', {
+			value: 'player',
 			writable: true,
 			configurable: true,
 			enumerable: true
