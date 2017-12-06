@@ -134,9 +134,18 @@ class Level {
 
 	obstacleAt(position, size) {
 		if (!(position instanceof Vector) || !(size instanceof Vector)) throw new Error('Неопределенный тип, отличный от объекта типа Vector');
-		// if ((0 < (position.x + size.x) < this.width) || (0 < (position.y + size.y) < this.height)) return undefined;
-		// if (((position.y + size.y) > this.height) || ((size.y >= this.height) && (size.x <= this.width))) return 'lava';
-		// if (((position.x + size.x) > this.width) || ((position.y + size.y) < this.height)) return 'wall';
+		if (position.x < 0) return 'wall';
+		if (position.y < 0) return 'wall';
+		if ((position.x + size.x) > this.height) return 'wall';
+		if ((position.y + size.y) > this.width) return 'lava';
+		for (let x = Math.ceil(position.x); x <= Math.ceil(position.x + size.x); x++)
+			for (let y = Math.ceil(position.y); y < Math.ceil(position.y + size.y); y++) {
+				if (this.grid[y][x] === 'wall') return 'wall';
+			}
+		for (let x = Math.ceil(position.x); x <= Math.ceil(position.x + size.x); x++)
+			for (let y = Math.ceil(position.y); y <= Math.ceil(position.y + size.y); y++) {
+				if (this.grid[y][x] === 'lava') return 'lava';
+			}
 			return undefined;
 	}
 
