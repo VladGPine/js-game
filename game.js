@@ -149,4 +149,11 @@ class Level {
 			return undefined;
 	}
 
+	removeActor(actor) {
+		if (!(actor instanceof Actor) && !actor) return;
+		for (let i = 0; i < this.actors.length; i++){
+			if (this.actors[i] === actor) return delete this.actors[i];
+		}
+	}
+
 }
