@@ -156,4 +156,7 @@ class Level {
 		}
 	}
 
+	noMoreActors(movingObjType) {
+		return (this.player.type === movingObjType);
+	}
 }
