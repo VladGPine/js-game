@@ -151,12 +151,29 @@ class Level {
 
 	removeActor(actor) {
 		if (!(actor instanceof Actor) && !actor) return;
-		for (let i = 0; i < this.actors.length; i++){
+		for (let i = 0; i < this.actors.length; i++) {
 			if (this.actors[i] === actor) return delete this.actors[i];
 		}
 	}
 
 	noMoreActors(movingObjType) {
-		return (this.player.type === movingObjType);
+		// function exist(actor, i, actors) {
+		// 	this.actors = actors;
+		// 	if (this.player.type === movingObjType) return actor;
+		// }
+		return ((this.player.type === movingObjType) || (this.player === undefined));
+	}
+
+	playerTouched(obstacleType, touched) {
+		if (this.status !== null) return;
+		if ((obstacleType === 'lava') || (obstacleType === 'fireball')) return this.status = 'lost';
+		if ((obstacleType === 'coin') && (touched instanceof Actor)) {
+			this.removeActor(touched);
+			let coinCounter = 0;
+			this.actors.forEach(coin => {
+				if (coin.type === 'coin') coinCounter++;
+				if (coinCounter === 0) this.status = 'won';
+			})
+		}
 	}
 }
