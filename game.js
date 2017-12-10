@@ -163,14 +163,74 @@ class Level {
 
 	playerTouched(obstacleType, touched) {
 		if (this.status !== null) return;
-		if ((obstacleType === 'lava') || (obstacleType === 'fireball')) return this.status = 'lost';
-		if ((obstacleType === 'coin')) {
-			this.removeActor(this.actors[touched]);
-			let coinCounter = 0;
-			this.actors.forEach(coin => {
-				if (coin.type === 'coin') coinCounter++;
-				if (coinCounter === 0) this.status = 'won';
-			})
+		if ((obstacleType === 'lava') || (obstacleType === 'fireball')) {
+			this.status = 'lost';
+			return;
 		}
+		if ((obstacleType === 'coin') && (touched instanceof Actor)) {
+			this.removeActor(touched);
+			if (this.noMoreActors('coin')) {
+				this.status = `won`;
+			}
+		}
+	}
+}
+
+class LevelParser {
+	constructor (dictionary) {
+		this.dictionary = dictionary;
+	}
+
+	actorFromSymbol(symbol) {
+		if (symbol === undefined) {
+			return undefined;
+		}
+		if (Object.keys(this.dictionary).indexOf(symbol) !== -1){
+			return this.dictionary[symbol];
+		}
+		return undefined;
+	}
+
+	obstacleFromSymbol(symbol) {
+		if (symbol === 'x') {
+			return 'wall';
+		}else if (symbol === '!') {
+			return 'lava';
+		} else {
+			return undefined;
+		}
+	}
+
+	createGrid(arrayString) {
+		let arr = [];
+		for (let i = 0; i < arrayString.length; i++) {
+			arr[i] = [];
+			for (let n = 0; n < arrayString[i].length; n++) {
+				arr[i][n] = this.obstacleFromSymbol(arrayString[i][n]);
+			}
+		}
+		return arr;
+	}
+
+	createActors(arrayString) {
+		const arrayMovingObj = [];
+
+		if (this.dictionary) {
+			arrayString.forEach((line, y) => {
+				line.split('').forEach((symbol, x) => {
+					if (typeof this.dictionary[symbol] === 'function') {
+						const actor = new this.dictionary[symbol](new Vector (x,y));
+						if (actor instanceof Actor) {
+							arrayMovingObj.push(actor);
+						}
+					}
+				});
+			});
+		}
+		return arrayMovingObj;
+	}
+
+	parse(arrayString) {
+		return new Level (this.createGrid(arrayString), this.createActors(arrayString));
 	}
 }
