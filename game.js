@@ -157,18 +157,15 @@ class Level {
 	}
 
 	noMoreActors(movingObjType) {
-		// function exist(actor, i, actors) {
-		// 	this.actors = actors;
-		// 	if (this.player.type === movingObjType) return actor;
-		// }
-		return ((this.player.type === movingObjType) || (this.player === undefined));
+		if (this.actors === undefined) return true;
+		return this.player.type === movingObjType;
 	}
 
 	playerTouched(obstacleType, touched) {
 		if (this.status !== null) return;
 		if ((obstacleType === 'lava') || (obstacleType === 'fireball')) return this.status = 'lost';
-		if ((obstacleType === 'coin') && (touched instanceof Actor)) {
-			this.removeActor(touched);
+		if ((obstacleType === 'coin')) {
+			this.removeActor(this.actors[touched]);
 			let coinCounter = 0;
 			this.actors.forEach(coin => {
 				if (coin.type === 'coin') coinCounter++;
