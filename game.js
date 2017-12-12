@@ -234,3 +234,16 @@ class LevelParser {
 		return new Level (this.createGrid(arrayString), this.createActors(arrayString));
 	}
 }
+
+class Fireball extends Actor {
+	constructor(pos = new Vector(0, 0), speed = new Vector(0, 0)) {
+		super(pos, new Vector(1, 1), speed);
+			Object.defineProperty(this, 'type', {
+				value: 'fireball',
+				writable: false,
+				configurable: true,
+				enumerable: true
+			});
+	}
+
+}
