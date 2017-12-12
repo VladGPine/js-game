@@ -167,10 +167,10 @@ class Level {
 			this.status = 'lost';
 			return;
 		}
-		if ((obstacleType === 'coin') && (touched instanceof Actor)) {
+		if ((touched.type === obstacleType)) {
 			this.removeActor(touched);
 			if (this.noMoreActors('coin')) {
-				this.status = `won`;
+				this.status = 'won';
 			}
 		}
 	}
@@ -245,5 +245,10 @@ class Fireball extends Actor {
 				enumerable: true
 			});
 	}
+
+	getNextPosition(time = 1) {
+		return new Vector(this.pos.x + this.speed.x * time, this.pos.y + this.speed.y * time)
+	}
+
 
 }
