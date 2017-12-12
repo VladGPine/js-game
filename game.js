@@ -250,5 +250,40 @@ class Fireball extends Actor {
 		return new Vector(this.pos.x + this.speed.x * time, this.pos.y + this.speed.y * time)
 	}
 
+	handleObstacle() {
+		this.speed = new Vector(-this.speed.x, -this.speed.y);
+	}
 
+	act(time, window) {
+		let pos = this.getNextPosition(time);
+		let obj = window.obstacleAt(pos, this.size);
+		if (obj) {
+			this.handleObstacle();
+			return;
+		}
+		this.pos = pos;
+	}
+}
+
+class HorizontalFireball extends Fireball {
+	constructor(pos = new Vector(), speed = new Vector(2,0)) {
+		super(pos, speed);
+	}
+}
+
+class VerticalFireball extends Fireball {
+	constructor(pos = new Vector(), speed = new Vector(0,2)) {
+		super(pos, speed);
+	}
+}
+
+class FireRain extends Fireball {
+	constructor(pos = new Vector(), speed = new Vector(0,2)) {
+		super(pos, speed);
+		this.beginningPos = pos;
+	}
+
+	handleObstacle() {
+		this.pos = this.beginningPos;
+	}
 }
