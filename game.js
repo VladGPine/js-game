@@ -167,7 +167,9 @@ class Level {
 			this.status = 'lost';
 			return;
 		}
-		if ((touched.type === obstacleType)) {
+		if ((obstacleType === 'coin') && (Object.defineProperty(touched, 'type', {
+			value: 'coin'
+			}))) {
 			this.removeActor(touched);
 			if (this.noMoreActors('coin')) {
 				this.status = 'won';
@@ -297,5 +299,22 @@ class Coin extends Actor {
 		this.springSpeed = 8;
 		this.springDist = 0.07;
 		this.spring = Math.random() * Math.PI * 2;
+	}
+
+	updateSpring(time = 1) {
+		this.spring += this.springSpeed * time;
+	}
+
+	getSpringVector() {
+		return new Vector(0, Math.sin(this.spring) * this.springDist);
+	}
+
+	getNextPosition(time) {
+		this.updateSpring(time);
+		return this.pos.plus(this.getSpringVector());
+	}
+
+	act(time) {
+		this.pos = this.getNextPosition(time);
 	}
 }
