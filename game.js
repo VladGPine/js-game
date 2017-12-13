@@ -157,20 +157,20 @@ class Level {
 	}
 
 	noMoreActors(movingObjType) {
-		if (this.actors === undefined) return true;
-		return this.player.type === movingObjType;
+		return ((this.actors === undefined) || (this.actors.some(movingObj => movingObj.type === movingObjType)))
 	}
 
 	playerTouched(obstacleType, touched) {
-		if (this.status !== null) return;
+		if (this.status != null) return false;
 		if ((obstacleType === 'lava') || (obstacleType === 'fireball')) {
 			this.status = 'lost';
-			return;
 		}
 		if ((obstacleType === 'coin') && (Object.defineProperty(touched, 'type', {
 			value: 'coin'
 			}))) {
+
 			this.removeActor(touched);
+
 			if (this.noMoreActors('coin')) {
 				this.status = 'won';
 			}
