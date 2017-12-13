@@ -150,14 +150,15 @@ class Level {
 	}
 
 	removeActor(actor) {
-		if (!(actor instanceof Actor) && !actor) return;
-		for (let i = 0; i < this.actors.length; i++) {
-			if (this.actors[i] === actor) return delete this.actors[i];
-		}
+		this.actors = this.actors.filter(other => other !== actor);
 	}
 
 	noMoreActors(movingObjType) {
-		return ((this.actors === undefined) || (this.actors.some(movingObj => movingObj.type === movingObjType)))
+		if (this.actors === undefined) return true;
+		for (let movingObj of this.actors) {
+			if (!(movingObj.type === movingObjType)) return false;
+		}
+		return true;
 	}
 
 	playerTouched(obstacleType, touched) {
@@ -165,9 +166,7 @@ class Level {
 		if ((obstacleType === 'lava') || (obstacleType === 'fireball')) {
 			this.status = 'lost';
 		}
-		if ((obstacleType === 'coin') && (Object.defineProperty(touched, 'type', {
-			value: 'coin'
-			}))) {
+		if (obstacleType === 'coin') {
 
 			this.removeActor(touched);
 
