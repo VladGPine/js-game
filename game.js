@@ -318,3 +318,12 @@ class Coin extends Actor {
 		this.pos = this.getNextPosition(time);
 	}
 }
+
+class Player extends Actor {
+	constructor(pos = new Vector()) {
+		super(new Vector(pos.x, pos.y - 0.5), new Vector(0.8, 1.5));
+		Object.defineProperty(this, 'type', {
+			get : () => 'player'
+		});
+	}
+}
